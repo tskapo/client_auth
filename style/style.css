@@ -1,0 +1,5 @@
+form.form-centered-300 {
+    position: relative;
+    max-width : 300px;
+    left : calc((100% - 300px)/2);
+}
