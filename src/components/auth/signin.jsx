@@ -43,7 +43,10 @@ function mapPropsToState (state) {
 }
 const reduxFormOptions = {
     form : 'signin',
-    fields : ['email', 'password']  
+    fields : ['email', 'password'],
+    /*validate (formProps) {
+        console.log("SIGNIN", formProps);
+    }*/
 };
 
 export default reduxForm(reduxFormOptions, mapPropsToState, actions)(Signin);

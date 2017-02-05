@@ -8,10 +8,13 @@ const form = 'signup";'
 const fields = ['email', 'password', 'passwordConfirm'];
 
 class Signup extends Component {
+    hadnleSubmitSignup (formProps) {
+        this.props.signupUser(formProps);
+    }
     render () {
         const {handleSubmit, fields : { email, password, passwordConfirm }} = this.props;
         return (
-            <form className="form-centered-300">
+            <form onSubmit={this.hadnleSubmitSignup.bind(this)} className="form-centered-300">
                 <fieldset className="form-group">
                     <label>ელფოსტა:</label>
                     <input {...email} className='form-control' type='email' />
@@ -55,4 +58,4 @@ function validate(formProps) {
 }
 
 
-export default reduxForm({ form, fields, validate })(Signup);
+export default reduxForm({ form, fields, validate }, null, actions)(Signup);
