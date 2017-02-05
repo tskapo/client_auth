@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTH_USER, UNAUTH_USER } from '../actions/types';
+import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from '../actions/types';
 
 const ROOT_URL = 'http://localhost:3090';
 
@@ -12,6 +12,20 @@ export function signinUser ({ email, password }) {
             localStorage.setItem('token', response.data.token);
             browserHistory.push('/feature');
         })
-        .catch();
+        .catch( () => {
+            dispatch(authError("არასწორი პაროლი ან მომხმარებელი"));
+        });
     }
+}
+
+export function authError (error) {
+    return {
+        type : AUTH_ERROR,
+        payload : error
+    };
+}
+
+export function signoutUser (error) {
+    localStorage.removeItem('token');
+    return { type : UNAUTH_USER };
 }

@@ -4,31 +4,46 @@ import * as actions from '../../actions'
 
 class Signin extends Component {
     handleSubmitSignin ({ email, password }) {
-        console.log("handleSubmitSignin", { email, password });
         this.props.signinUser({ email, password });
     }
+    
+    renderAlert () {
+        if (this.props.errorMessage) {
+            return (
+                <div className='alert alert-danger'> 
+                    <strong>{this.props.errorMessage}</strong>
+                </div>
+            );
+        }
+    }
+
     render () {
         const {handleSubmit, fields : { email, password }} = this.props;
         return (
             <form onSubmit={handleSubmit(this.handleSubmitSignin.bind(this))} className="form-centered-300">
                 <fieldset className="form-group">
-                    <label>Email:</label>
+                    <label>ელფოსტა:</label>
                     <input {...email} className='form-control' type='email' />
                 </fieldset>
                 <fieldset className="form-group">
-                    <label>Password:</label>
+                    <label>პაროლი:</label>
                     <input {...password} className='form-control' type='password' />
                 </fieldset>
                 <br />
-                <button action='submit' className='btn btn-primary'>Sign in</button>
+                {this.renderAlert()}
+                <button action='submit' className='btn btn-primary'>შესვლა</button>
             </form> 
         );
     }
 };
 
+
+function mapPropsToState (state) {
+    return  {errorMessage : state.auth.error};
+}
 const reduxFormOptions = {
     form : 'signin',
     fields : ['email', 'password']  
 };
 
-export default reduxForm(reduxFormOptions, null, actions)(Signin);
+export default reduxForm(reduxFormOptions, mapPropsToState, actions)(Signin);
